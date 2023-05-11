@@ -40,16 +40,5 @@ class MainActivity : AppCompatActivity() {
                     // set this date in TextView for Display
                     dateTV.setText(Date)
                 })
-        val button1 = findViewById<Button>(R.id.button1)
-        button1.setOnClickListener {
-            // Get the number from the edit text and calculate the square
-            val number = findViewById<EditText>(R.id.editText1).text.toString().toInt()
-            val square = number * number
-
-            // Display the result in the result view
-            val resultView = findViewById<TextView>(R.id.resultView)
-            resultView.text = "The square of $number is $square"
-        }
-
     }
 }
