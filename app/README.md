@@ -1,0 +1,1 @@
+Enable USB debugging for connections
