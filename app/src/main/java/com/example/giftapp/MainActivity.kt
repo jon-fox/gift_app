@@ -1,5 +1,8 @@
 package com.example.giftapp
 
+import FirstFragment
+import SecondFragment
+import ThirdFragment
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -8,6 +11,8 @@ import android.widget.CalendarView.OnDateChangeListener
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     // on below line we are creating
@@ -22,6 +27,12 @@ class MainActivity : AppCompatActivity() {
         // initializing variables of
         // list view with their ids.
 //        dateTV = findViewById(R.id.idTVDate)
+
+        val firstFragment=FirstFragment()
+        val secondFragment=SecondFragment()
+        val thirdFragment=ThirdFragment()
+
+        setCurrentFragment(firstFragment)
 
         calendarView = findViewById(R.id.calendarView)
 
@@ -40,5 +51,24 @@ class MainActivity : AppCompatActivity() {
                     // set this date in TextView for Display
                     dateTV.setText(Date)
                 })
+
+//        val bottomNavigationView = (R.id.bottomNavigationView)
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+
+
+        bottomNavigationView.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.home->setCurrentFragment(firstFragment)
+                R.id.person->setCurrentFragment(secondFragment)
+                R.id.settings->setCurrentFragment(thirdFragment)
+
+            }
+            true
+        }
     }
+    private fun setCurrentFragment(fragment: Fragment)=
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.flFragment,fragment)
+            commit()
+        }
 }
