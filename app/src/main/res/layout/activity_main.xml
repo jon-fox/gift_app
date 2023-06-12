@@ -82,8 +82,8 @@
         android:textAlignment="center"
         android:textColor="#fff"
         android:textSize="30sp" />
-
     <ScrollView
+        android:id="@+id/parent_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="166dp"
         android:layout_alignParentStart="true"
@@ -93,6 +93,7 @@
         android:contentDescription="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+            android:id="@+id/wish_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- activity_second.xml -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp"
+        tools:context=".FormActivity">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter Your Upcoming Gift!"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="16dp"/>
+        <EditText
+            android:id="@+id/inputGifteeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your Giftee's Name!"
+            android:background="@drawable/edittext_outline"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp"
+            android:inputType="textMultiLine"
+            android:minLines="3" />
+        <EditText
+            android:id="@+id/inputGiftName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Gift!"
+            android:background="@drawable/edittext_outline"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp"
+            android:inputType="textMultiLine"
+            android:minLines="3" />
+        <EditText
+            android:id="@+id/inputGiftLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter links to Gift!"
+            android:background="@drawable/edittext_outline"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp"
+            android:inputType="textMultiLine"
+            android:minLines="3" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save!"
+            android:id="@+id/goBackButton"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,6 @@ import FirstFragment
 import SecondFragment
 import ThirdFragment
 import android.content.Intent
-import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.widget.*
@@ -13,13 +12,13 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
     // on below line we are creating
     // variables for text view and calendar view
     lateinit var dateTV: TextView
     lateinit var calendarView: CalendarView
+//    private lateinit var editText: EditText
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         setCurrentFragment(firstFragment)
 
         calendarView = findViewById(R.id.calendarView)
+//        editText = findViewById(R.id.editText)
 
         // on below line we are adding set on
         // date change listener for calendar view.
@@ -56,8 +56,11 @@ class MainActivity : AppCompatActivity() {
 
         val plusImageView: Button = findViewById(R.id.plusImageView)
         plusImageView.setOnClickListener {
-            val currentDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
-            dateTV.text = currentDate
+//            val currentDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+//            dateTV.text = currentDate
+            // Create an Intent to launch the formActivity
+            val intent = Intent(this, FormActivity::class.java)
+            startActivity(intent)
         }
 
 //        val plusImageView: Button = findViewById(R.id.plusImageView)
@@ -75,6 +78,9 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+//    private fun showToast(message: String) {
+//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+//    }
     private fun setCurrentFragment(fragment: Fragment)=
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.flFragment,fragment)
