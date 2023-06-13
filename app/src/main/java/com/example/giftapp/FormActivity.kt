@@ -21,24 +21,17 @@ class FormActivity : AppCompatActivity() {
         val inputGiftLink = findViewById<EditText>(R.id.inputGiftLink)
 
         // Gets the data repository in write mode
+        val dbHelper = GiftDbHelper(this)
+
         val db = dbHelper.writableDatabase
 
-        // Create a new map of values, where column names are the keys
         val values = ContentValues().apply {
-            put(FeedEntry.COLUMN_NAME_TITLE, title)
-            put(FeedEntry.COLUMN_NAME_SUBTITLE, subtitle)
+            put(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME, inputGifteeName.text.toString())
+            put(GiftContract.GiftEntry.COLUMN_GIFT_NAME, inputGiftName.text.toString())
+            put(GiftContract.GiftEntry.COLUMN_GIFT_LINK, inputGiftLink.text.toString())
         }
 
-        // Insert the new row, returning the primary key value of the new row
-        val newRowId = db?.insert(FeedEntry.TABLE_NAME, null, values)
-
-        val gift = Gift(inputGifteeName.text.toString(), inputGiftName.text.toString(), inputGiftLink.text.toString())
-
-        val values = ContentValues().apply {
-            put(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME, gift.gifteeName)
-            put(GiftContract.GiftEntry.COLUMN_GIFT_NAME, gift.giftName)
-            put(GiftContract.GiftEntry.COLUMN_GIFT_LINK, gift.giftLink)
-        }
+        val newRowId = db?.insert(GiftContract.GiftEntry.TABLE_NAME, null, values)
 
         db.insert(GiftContract.GiftEntry.TABLE_NAME, null, values)
 
