@@ -20,20 +20,34 @@ class FormActivity : AppCompatActivity() {
         val inputGiftName = findViewById<EditText>(R.id.inputGiftName)
         val inputGiftLink = findViewById<EditText>(R.id.inputGiftLink)
 
-        // Gets the data repository in write mode
-        val dbHelper = GiftDbHelper(this)
+        try {
+            // Gets the data repository in write mode
+            val dbHelper = GiftDbHelper(this)
 
-        val db = dbHelper.writableDatabase
+            val db = dbHelper.writableDatabase
 
-        val values = ContentValues().apply {
-            put(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME, inputGifteeName.text.toString())
-            put(GiftContract.GiftEntry.COLUMN_GIFT_NAME, inputGiftName.text.toString())
-            put(GiftContract.GiftEntry.COLUMN_GIFT_LINK, inputGiftLink.text.toString())
+            val values = ContentValues().apply {
+                put(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME, inputGifteeName.text.toString())
+                put(GiftContract.GiftEntry.COLUMN_GIFT_NAME, inputGiftName.text.toString())
+                put(GiftContract.GiftEntry.COLUMN_GIFT_LINK, inputGiftLink.text.toString())
+            }
+
+            val newRowId = db?.insert(GiftContract.GiftEntry.TABLE_NAME, null, values)
+
+//            db.insert(GiftContract.GiftEntry.TABLE_NAME, null, values)
+
+            // Handle the result of the insert operation if needed
+            if (newRowId != -1L) {
+                // Insert successful
+                System.out.println("SUCCESS!!!!")
+            } else {
+                System.out.println("BIG TIME ERROR!!!!")
+            }
+
+        } catch (e: Exception) {
+            // Handle the exception
+            e.printStackTrace()
         }
-
-        val newRowId = db?.insert(GiftContract.GiftEntry.TABLE_NAME, null, values)
-
-        db.insert(GiftContract.GiftEntry.TABLE_NAME, null, values)
 
         goBackButton.setOnClickListener {
             // Create an Intent to go back to the MainActivity

@@ -1,6 +1,7 @@
 package com.example.giftapp
 
 import FirstFragment
+import GiftDbHelper
 import SecondFragment
 import ThirdFragment
 import android.content.Intent
@@ -77,6 +78,9 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_main)
+        fetchDataFromDatabase()
     }
 //    private fun showToast(message: String) {
 //        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -86,4 +90,49 @@ class MainActivity : AppCompatActivity() {
             replace(R.id.flFragment,fragment)
             commit()
         }
+    private fun fetchDataFromDatabase() {
+        val linearLayout = findViewById<LinearLayout>(R.id.wish_list)
+        val dbHelper = GiftDbHelper(this)
+        val db = dbHelper.readableDatabase
+
+        val projection = arrayOf(
+            GiftContract.GiftEntry.COLUMN_GIFTEE_NAME,
+            GiftContract.GiftEntry.COLUMN_GIFT_NAME,
+            GiftContract.GiftEntry.COLUMN_GIFT_LINK
+        )
+
+        val cursor = db.query(
+            GiftContract.GiftEntry.TABLE_NAME,
+            projection,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+
+        while (cursor.moveToNext()) {
+            val gifteeName = cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME))
+            val giftName = cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFT_NAME))
+            val giftLink = cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFT_LINK))
+
+            // Create TextViews and set their text to the retrieved values
+            val gifteeNameTextView = TextView(this)
+            gifteeNameTextView.text = "Giftee Name: $gifteeName"
+
+            val giftNameTextView = TextView(this)
+            giftNameTextView.text = "Gift Name: $giftName"
+
+            val giftLinkTextView = TextView(this)
+            giftLinkTextView.text = "Gift Link: $giftLink"
+
+            // Add the TextViews to your LinearLayout
+            linearLayout.addView(gifteeNameTextView)
+            linearLayout.addView(giftNameTextView)
+            linearLayout.addView(giftLinkTextView)
+        }
+
+        cursor.close()
+    }
 }
+
