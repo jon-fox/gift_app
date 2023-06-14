@@ -1,5 +1,6 @@
 package com.example.giftapp
 
+import android.util.Log
 import FirstFragment
 import GiftDbHelper
 import SecondFragment
@@ -132,6 +133,8 @@ class MainActivity : AppCompatActivity() {
 
                 val giftLinkTextView = TextView(this@MainActivity)
                 giftLinkTextView.text = "Gift Link: $giftLink"
+
+                Log.d("MainActivity", "Giftee Name: $gifteeName")
 
                 // Add the TextViews to your LinearLayout
                 linearLayout.addView(gifteeNameTextView)
