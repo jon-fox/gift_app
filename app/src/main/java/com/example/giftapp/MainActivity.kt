@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
             // Create an Intent to launch the formActivity
             val intent = Intent(this, FormActivity::class.java)
             startActivity(intent)
+            fetchDataFromDatabase()
         }
 
 //        val plusImageView: Button = findViewById(R.id.plusImageView)
@@ -80,7 +81,6 @@ class MainActivity : AppCompatActivity() {
         }
 //        super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_main)
-        fetchDataFromDatabase()
     }
 //    private fun showToast(message: String) {
 //        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -101,38 +101,46 @@ class MainActivity : AppCompatActivity() {
             GiftContract.GiftEntry.COLUMN_GIFT_LINK
         )
 
+        val selection = "${GiftContract.GiftEntry.COLUMN_GIFTEE_NAME} = ?"
+        val selectionArgs = arrayOf("yo")
+
         val cursor = db.query(
             GiftContract.GiftEntry.TABLE_NAME,
             projection,
-            null,
-            null,
+            selection,
+            selectionArgs,
             null,
             null,
             null
         )
 
-        while (cursor.moveToNext()) {
-            val gifteeName = cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME))
-            val giftName = cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFT_NAME))
-            val giftLink = cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFT_LINK))
+        with(cursor) {
+            while (moveToNext()) {
+                val gifteeName =
+                    cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME))
+                val giftName =
+                    cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFT_NAME))
+                val giftLink =
+                    cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFT_LINK))
 
-            // Create TextViews and set their text to the retrieved values
-            val gifteeNameTextView = TextView(this)
-            gifteeNameTextView.text = "Giftee Name: $gifteeName"
+                // Create TextViews and set their text to the retrieved values
+                val gifteeNameTextView = TextView(this@MainActivity)
+                gifteeNameTextView.text = "Giftee Name: $gifteeName"
 
-            val giftNameTextView = TextView(this)
-            giftNameTextView.text = "Gift Name: $giftName"
+                val giftNameTextView = TextView(this@MainActivity)
+                giftNameTextView.text = "Gift Name: $giftName"
 
-            val giftLinkTextView = TextView(this)
-            giftLinkTextView.text = "Gift Link: $giftLink"
+                val giftLinkTextView = TextView(this@MainActivity)
+                giftLinkTextView.text = "Gift Link: $giftLink"
 
-            // Add the TextViews to your LinearLayout
-            linearLayout.addView(gifteeNameTextView)
-            linearLayout.addView(giftNameTextView)
-            linearLayout.addView(giftLinkTextView)
+                // Add the TextViews to your LinearLayout
+                linearLayout.addView(gifteeNameTextView)
+                linearLayout.addView(giftNameTextView)
+                linearLayout.addView(giftLinkTextView)
+
+            }
+            cursor.close()
         }
-
-        cursor.close()
     }
 }
 
