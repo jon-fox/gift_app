@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var dateString: String? = null
+
         // initializing variables of
         // list view with their ids.
         dateTV = findViewById(R.id.idTVDate)
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                     // in which we are adding all the variables in it.
                     val Date = (dayOfMonth.toString() + "-"
                             + (month + 1) + "-" + year)
-
+                    dateString = Date
                     // set this date in TextView for Display
                     dateTV.setText(Date)
                 })
@@ -62,6 +64,7 @@ class MainActivity : AppCompatActivity() {
 //            dateTV.text = currentDate
             // Create an Intent to launch the formActivity
             val intent = Intent(this, FormActivity::class.java)
+            intent.putExtra("date", dateString)
             startActivity(intent)
             fetchDataFromDatabase()
         }

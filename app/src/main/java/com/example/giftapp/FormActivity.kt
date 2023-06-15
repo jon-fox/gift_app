@@ -25,8 +25,10 @@ class FormActivity : AppCompatActivity() {
             val dbHelper = GiftDbHelper(this)
 
             val db = dbHelper.writableDatabase
+            val dateValue = intent.getStringExtra("date")
 
             val values = ContentValues().apply {
+                put(GiftContract.GiftEntry.COLUMN_GIFTEE_DATE, dateValue)
                 put(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME, inputGifteeName.text.toString())
                 put(GiftContract.GiftEntry.COLUMN_GIFT_NAME, inputGiftName.text.toString())
                 put(GiftContract.GiftEntry.COLUMN_GIFT_LINK, inputGiftLink.text.toString())

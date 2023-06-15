@@ -7,6 +7,7 @@ import android.provider.BaseColumns
 object GiftContract {
     object GiftEntry : BaseColumns {
         const val TABLE_NAME = "gifts"
+        const val COLUMN_GIFTEE_DATE = "gift_date"
         const val COLUMN_GIFTEE_NAME = "giftee_name"
         const val COLUMN_GIFT_NAME = "gift_name"
         const val COLUMN_GIFT_LINK = "gift_link"
@@ -17,7 +18,8 @@ object GiftContract {
 // https://developer.android.com/training/data-storage/sqlite
 private const val SQL_CREATE_ENTRIES =
     "CREATE TABLE ${GiftContract.GiftEntry.TABLE_NAME} (" +
-            "${GiftContract.GiftEntry.COLUMN_GIFTEE_NAME} TEXT PRIMARY KEY," +
+            "${GiftContract.GiftEntry.COLUMN_GIFTEE_DATE} STRING PRIMARY KEY," +
+            "${GiftContract.GiftEntry.COLUMN_GIFTEE_NAME} TEXT," +
             "${GiftContract.GiftEntry.COLUMN_GIFT_NAME} TEXT," +
             "${GiftContract.GiftEntry.COLUMN_GIFT_LINK} TEXT)"
 
