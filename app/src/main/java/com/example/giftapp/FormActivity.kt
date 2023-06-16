@@ -4,6 +4,7 @@ import GiftDbHelper
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ class FormActivity : AppCompatActivity() {
         setContentView(R.layout.activity_form)
 
         val goBackButton = findViewById<Button>(R.id.goBackButton)
+        Log.i("FormActivity","Creating GIFT form information")
 
         // put these into a database
         val inputGifteeName = findViewById<EditText>(R.id.inputGifteeName)

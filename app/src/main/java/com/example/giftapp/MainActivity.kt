@@ -22,12 +22,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var calendarView: CalendarView
 //    private lateinit var editText: EditText
 
+    companion object {
+        var dateString: String? = ""
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        var dateString: String? = null
 
         // initializing variables of
         // list view with their ids.
@@ -66,9 +68,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, FormActivity::class.java)
             intent.putExtra("date", dateString)
             startActivity(intent)
-            fetchDataFromDatabase()
         }
-
+        Log.i("MainActivity","Entering form activity and moving on to fetch from database")
+        fetchDataFromDatabase()
 //        val plusImageView: Button = findViewById(R.id.plusImageView)
 // Apply additional customizations to the plusImageView if required
 //        val bottomNavigationView = (R.id.bottomNavigationView)
@@ -95,6 +97,7 @@ class MainActivity : AppCompatActivity() {
             commit()
         }
     private fun fetchDataFromDatabase() {
+        Log.i("MainActivity", "Fetching from database")
         val linearLayout = findViewById<LinearLayout>(R.id.wish_list)
         val dbHelper = GiftDbHelper(this)
         val db = dbHelper.readableDatabase
@@ -105,8 +108,8 @@ class MainActivity : AppCompatActivity() {
             GiftContract.GiftEntry.COLUMN_GIFT_LINK
         )
 
-        val selection = "${GiftContract.GiftEntry.COLUMN_GIFTEE_NAME} = ?"
-        val selectionArgs = arrayOf("yo")
+        val selection = "${GiftContract.GiftEntry.COLUMN_GIFTEE_DATE} = ?"
+        val selectionArgs = arrayOf(dateString)
 
         val cursor = db.query(
             GiftContract.GiftEntry.TABLE_NAME,
@@ -137,7 +140,7 @@ class MainActivity : AppCompatActivity() {
                 val giftLinkTextView = TextView(this@MainActivity)
                 giftLinkTextView.text = "Gift Link: $giftLink"
 
-                Log.d("MainActivity", "Giftee Name: $gifteeName")
+                Log.i("MainActivity", "Giftee Name: $gifteeName")
 
                 // Add the TextViews to your LinearLayout
                 linearLayout.addView(gifteeNameTextView)

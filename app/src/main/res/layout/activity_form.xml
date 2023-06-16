@@ -28,6 +28,7 @@
             android:layout_marginBottom="16dp"
             android:padding="8dp"
             android:inputType="textMultiLine"
+            android:textColor="@android:color/black"
             android:minLines="3" />
         <EditText
             android:id="@+id/inputGiftName"
@@ -38,6 +39,7 @@
             android:layout_marginBottom="16dp"
             android:padding="8dp"
             android:inputType="textMultiLine"
+            android:textColor="@android:color/black"
             android:minLines="3" />
         <EditText
             android:id="@+id/inputGiftLink"
@@ -48,6 +50,7 @@
             android:layout_marginBottom="16dp"
             android:padding="8dp"
             android:inputType="textMultiLine"
+            android:textColor="@android:color/black"
             android:minLines="3" />
         <Button
             android:layout_width="wrap_content"
