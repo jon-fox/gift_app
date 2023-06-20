@@ -16,7 +16,7 @@ class FormActivity : AppCompatActivity() {
         setContentView(R.layout.activity_form)
 
         val goBackButton = findViewById<Button>(R.id.goBackButton)
-        Log.i("FormActivity", "Creating GIFT form information")
+        Log.i("FormActivity", "Creating Gift form information")
         goBackButton.setOnClickListener {
 
             // put these into a database

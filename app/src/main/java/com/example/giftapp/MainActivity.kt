@@ -7,7 +7,6 @@ import SecondFragment
 import ThirdFragment
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.database.Cursor
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
@@ -150,24 +149,25 @@ class MainActivity : AppCompatActivity() {
                     cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFT_LINK))
 
                 // Create TextViews and set their text to the retrieved values
-                val gifteeNameTextView = TextView(this@MainActivity)
-                gifteeNameTextView.text = "Giftee Name: $gifteeName"
-
-                val giftNameTextView = TextView(this@MainActivity)
-                giftNameTextView.text = "Gift Name: $giftName"
-
-                val giftLinkTextView = TextView(this@MainActivity)
-                giftLinkTextView.text = "Gift Link: $giftLink"
+                val gifteeButton = Button(this@MainActivity)
+                gifteeButton.text = "Giftee: $gifteeName"
 
                 Log.i("MainActivity", "Giftee Name: $gifteeName")
                 Log.i("MainActivity", "Gift Name: $giftName")
                 Log.i("MainActivity", "Gift Link: $giftLink")
 
-                // Add the TextViews to your LinearLayout
-                linearLayout.addView(gifteeNameTextView)
-                linearLayout.addView(giftNameTextView)
-                linearLayout.addView(giftLinkTextView)
+                // Set click listeners for the buttons if needed
+                gifteeButton.setOnClickListener {
+                    // Handle button click event for gifteeButton
+                    val intent = Intent(this@MainActivity, GiftInfoActivity::class.java)
+                    intent.putExtra("gifteeName", gifteeName)
+                    intent.putExtra("giftName", giftName)
+                    intent.putExtra("giftLink", giftLink)
+                    startActivity(intent)
+                }
 
+                // Add the TextViews to your LinearLayout
+                linearLayout.addView(gifteeButton)
             }
             cursor.close()
         }
