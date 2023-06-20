@@ -18,7 +18,8 @@ object GiftContract {
 // https://developer.android.com/training/data-storage/sqlite
 private const val SQL_CREATE_ENTRIES =
     "CREATE TABLE ${GiftContract.GiftEntry.TABLE_NAME} (" +
-            "${GiftContract.GiftEntry.COLUMN_GIFTEE_DATE} STRING PRIMARY KEY," +
+//            "${GiftContract.GiftEntry.COLUMN_GIFTEE_DATE} STRING PRIMARY KEY," +
+            "${GiftContract.GiftEntry.COLUMN_GIFTEE_DATE} STRING," +
             "${GiftContract.GiftEntry.COLUMN_GIFTEE_NAME} TEXT," +
             "${GiftContract.GiftEntry.COLUMN_GIFT_NAME} TEXT," +
             "${GiftContract.GiftEntry.COLUMN_GIFT_LINK} TEXT)"
