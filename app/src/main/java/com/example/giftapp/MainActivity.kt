@@ -11,6 +11,8 @@ import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.widget.*
 import android.widget.CalendarView.OnDateChangeListener
 import androidx.annotation.RequiresApi
@@ -123,7 +125,10 @@ class MainActivity : AppCompatActivity() {
         val projection = arrayOf(
             GiftContract.GiftEntry.COLUMN_GIFTEE_NAME,
             GiftContract.GiftEntry.COLUMN_GIFT_NAME,
-            GiftContract.GiftEntry.COLUMN_GIFT_LINK
+            GiftContract.GiftEntry.COLUMN_GIFT_OCCASION,
+            GiftContract.GiftEntry.COLUMN_GIFT_NOTES,
+            GiftContract.GiftEntry.COLUMN_GIFT_LINK,
+            GiftContract.GiftEntry.COLUMN_GIFT_ATTACHMENTS
         )
 
         val selection = "${GiftContract.GiftEntry.COLUMN_GIFTEE_DATE} = ?"
@@ -139,22 +144,56 @@ class MainActivity : AppCompatActivity() {
             null
         )
 
+//        val inflater = LayoutInflater.from(this)
+
         with(cursor) {
             while (moveToNext()) {
                 val gifteeName =
                     cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME))
                 val giftName =
                     cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFT_NAME))
+                val giftOccasion =
+                    cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFT_OCCASION))
+                val giftNotes =
+                    cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFT_NOTES))
                 val giftLink =
                     cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFT_LINK))
+                val giftAttachments =
+                    cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFT_ATTACHMENTS))
 
                 // Create TextViews and set their text to the retrieved values
+//                val gifteeButton = Button(this@MainActivity, null, R.id.gifteeButton)
                 val gifteeButton = Button(this@MainActivity)
+//                val gifteeButton = inflater.inflate(R.layout.giftee_button, linearLayout, false) as Button
                 gifteeButton.text = "Giftee: $gifteeName"
+
+                gifteeButton.setBackgroundResource(R.drawable.giftee_button)
+
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+//                layoutParams.weight = 0.5f // Set the weight to occupy half the width of the screen
+                layoutParams.gravity = Gravity.CENTER_HORIZONTAL // Center the button horizontally
+                // taking the screen width and adjusting the button length to fit
+                val displayMetrics = resources.displayMetrics
+                val screenWidth = displayMetrics.widthPixels
+                val buttonWidth = (screenWidth * 0.75).toInt()
+                layoutParams.width = buttonWidth
+
+                //margins between buttons
+                val margin = 10
+                layoutParams.setMargins(0, 0, margin, 0)
+
+                gifteeButton.layoutParams = layoutParams
+
 
                 Log.i("MainActivity", "Giftee Name: $gifteeName")
                 Log.i("MainActivity", "Gift Name: $giftName")
+                Log.i("MainActivity", "Gift Occasion: $giftOccasion")
+                Log.i("MainActivity", "Gift Notes: $giftNotes")
                 Log.i("MainActivity", "Gift Link: $giftLink")
+                Log.i("MainActivity", "Gift Attachments: $giftAttachments")
 
                 // Set click listeners for the buttons if needed
                 gifteeButton.setOnClickListener {
@@ -162,10 +201,12 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this@MainActivity, GiftInfoActivity::class.java)
                     intent.putExtra("gifteeName", gifteeName)
                     intent.putExtra("giftName", giftName)
+                    intent.putExtra("giftOccasion", giftOccasion)
+                    intent.putExtra("giftNotes", giftNotes)
                     intent.putExtra("giftLink", giftLink)
+                    intent.putExtra("giftAttachments", giftAttachments)
                     startActivity(intent)
                 }
-
                 // Add the TextViews to your LinearLayout
                 linearLayout.addView(gifteeButton)
             }

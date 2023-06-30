@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -22,13 +23,19 @@ class FormActivity : AppCompatActivity() {
             // put these into a database
             val inputGifteeName = findViewById<EditText>(R.id.inputGifteeName).text.toString()
             val inputGiftName = findViewById<EditText>(R.id.inputGiftName).text.toString()
+            val inputGiftOccasion = findViewById<EditText>(R.id.inputGiftOccasion).text.toString()
+            val inputGiftNotes = findViewById<EditText>(R.id.inputGiftNotes).text.toString()
             val inputGiftLink = findViewById<EditText>(R.id.inputGiftLink).text.toString()
+            val inputGiftAttachments = findViewById<EditText>(R.id.inputGiftAttachments).text.toString()
 
-            if (inputGifteeName.isNotBlank() && inputGiftName.isNotBlank() && inputGiftLink.isNotBlank()) {
+            if (inputGifteeName.isNotBlank() && inputGiftName.isNotBlank()) {
                 // All input fields are filled, perform logging
                 Log.i("FormActivity", "FormActivity Giftee Name: $inputGifteeName")
                 Log.i("FormActivity", "FormActivity Gift Name: $inputGiftName")
+                Log.i("FormActivity", "FormActivity Giftee Occasion: $inputGiftOccasion")
+                Log.i("FormActivity", "FormActivity Gift Notes: $inputGiftNotes")
                 Log.i("FormActivity", "FormActivity Gift Link: $inputGiftLink")
+                Log.i("FormActivity", "FormActivity Gift Attachments: $inputGiftAttachments")
 
                 try {
                     // Gets the data repository in write mode
@@ -41,14 +48,20 @@ class FormActivity : AppCompatActivity() {
                         put(GiftContract.GiftEntry.COLUMN_GIFTEE_DATE, dateValue)
                         put(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME, inputGifteeName)
                         put(GiftContract.GiftEntry.COLUMN_GIFT_NAME, inputGiftName)
+                        put(GiftContract.GiftEntry.COLUMN_GIFT_OCCASION, inputGiftOccasion)
+                        put(GiftContract.GiftEntry.COLUMN_GIFT_NOTES, inputGiftNotes)
                         put(GiftContract.GiftEntry.COLUMN_GIFT_LINK, inputGiftLink)
+                        put(GiftContract.GiftEntry.COLUMN_GIFT_ATTACHMENTS, inputGiftAttachments)
                     }
 
                     val newRowId = db?.insert(GiftContract.GiftEntry.TABLE_NAME, null, values)
 
                     Log.i("FormActivity", "FormActivity Giftee Name: $inputGifteeName")
                     Log.i("FormActivity", "FormActivity Gift Name: $inputGiftName")
+                    Log.i("FormActivity", "FormActivity Giftee Occasion: $inputGiftOccasion")
+                    Log.i("FormActivity", "FormActivity Gift Notes: $inputGiftNotes")
                     Log.i("FormActivity", "FormActivity Gift Link: $inputGiftLink")
+                    Log.i("FormActivity", "FormActivity Gift Attachments: $inputGiftAttachments")
 
                     // Handle the result of the insert operation if needed
                     if (newRowId != -1L) {
@@ -71,7 +84,7 @@ class FormActivity : AppCompatActivity() {
                 }
             } else {
                 // Show an error or prompt the user to fill in all fields
-                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill in Giftee and Name of Gift Field :)", Toast.LENGTH_SHORT).show()
             }
         }
     }

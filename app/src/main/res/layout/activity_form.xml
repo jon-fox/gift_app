@@ -1,61 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- activity_second.xml -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    tools:context=".FormActivity">
+
+    <ScrollView
+        android:id="@+id/parent_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="16dp"
-        tools:context=".FormActivity">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Enter Your Upcoming Gift!"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="16dp"/>
-        <EditText
-            android:id="@+id/inputGifteeName"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@id/goBackButton"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/scroll_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your Giftee's Name!"
-            android:background="@drawable/edittext_outline"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            android:inputType="textMultiLine"
-            android:textColor="@android:color/black"
-            android:minLines="3" />
-        <EditText
-            android:id="@+id/inputGiftName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Gift!"
-            android:background="@drawable/edittext_outline"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            android:inputType="textMultiLine"
-            android:textColor="@android:color/black"
-            android:minLines="3" />
-        <EditText
-            android:id="@+id/inputGiftLink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter links to Gift!"
-            android:background="@drawable/edittext_outline"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            android:inputType="textMultiLine"
-            android:textColor="@android:color/black"
-            android:minLines="3" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save!"
-            android:id="@+id/goBackButton"/>
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Enter Your Upcoming Gift!"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/inputGifteeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext_outline"
+                android:hint="Enter your Giftee's Name!"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:padding="8dp"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/inputGiftName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext_outline"
+                android:hint="Enter Gift!"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:padding="8dp"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/inputGiftOccasion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext_outline"
+                android:hint="Enter the special Gift Occasion!"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:padding="8dp"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/inputGiftNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext_outline"
+                android:hint="Enter special Gift Notes!"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:padding="8dp"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/inputGiftLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext_outline"
+                android:hint="Enter links for your Gift!"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:padding="8dp"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/inputGiftAttachments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext_outline"
+                android:hint="Enter any attachments for your Gift!"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:padding="8dp"
+                android:textColor="@android:color/black" />
+
+            <LinearLayout
+                android:id="@+id/form_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/goBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

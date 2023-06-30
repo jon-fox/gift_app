@@ -10,7 +10,10 @@ object GiftContract {
         const val COLUMN_GIFTEE_DATE = "gift_date"
         const val COLUMN_GIFTEE_NAME = "giftee_name"
         const val COLUMN_GIFT_NAME = "gift_name"
+        const val COLUMN_GIFT_OCCASION = "gift_occasion"
+        const val COLUMN_GIFT_NOTES = "gift_notes"
         const val COLUMN_GIFT_LINK = "gift_link"
+        const val COLUMN_GIFT_ATTACHMENTS = "gift_attachments"
     }
 }
 
@@ -22,6 +25,9 @@ private const val SQL_CREATE_ENTRIES =
             "${GiftContract.GiftEntry.COLUMN_GIFTEE_DATE} STRING," +
             "${GiftContract.GiftEntry.COLUMN_GIFTEE_NAME} TEXT," +
             "${GiftContract.GiftEntry.COLUMN_GIFT_NAME} TEXT," +
+            "${GiftContract.GiftEntry.COLUMN_GIFT_OCCASION} TEXT," +
+            "${GiftContract.GiftEntry.COLUMN_GIFT_NOTES} TEXT," +
+            "${GiftContract.GiftEntry.COLUMN_GIFT_ATTACHMENTS} TEXT," +
             "${GiftContract.GiftEntry.COLUMN_GIFT_LINK} TEXT)"
 
 private const val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${GiftContract.GiftEntry.TABLE_NAME}"
