@@ -44,6 +44,8 @@ class FormActivity : AppCompatActivity() {
                     val db = dbHelper.writableDatabase
                     val dateValue = intent.getStringExtra("date")
 
+                    Log.i("FormActivity", "Value of date string ${dateValue}")
+
                     val values = ContentValues().apply {
                         put(GiftContract.GiftEntry.COLUMN_GIFTEE_DATE, dateValue)
                         put(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME, inputGifteeName)
@@ -75,7 +77,10 @@ class FormActivity : AppCompatActivity() {
 
                     // Create an Intent to go back to the MainActivity
                     val intent = Intent(this, MainActivity::class.java)
+                    // Add the selected date as an extra to the result intent
+                    intent.putExtra("date", dateValue)
                     startActivity(intent)
+
                     finish() // Call finish() to close the FormActivity and go back
 
                 } catch (e: Exception) {

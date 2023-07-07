@@ -39,20 +39,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val receivedIntent = intent
+        if (receivedIntent.hasExtra("date")) {
+            Log.i("MainActivity", "Received info from form activity")
+            dateString = receivedIntent.getStringExtra("date") ?: dateString
+            fetchDataFromDatabase()
+        }
+
         // initializing variables of
         // list view with their ids.
         dateTV = findViewById(R.id.idTVDate)
 
-        val firstFragment=FirstFragment()
-        val secondFragment=SecondFragment()
-        val thirdFragment=ThirdFragment()
+        val firstFragment = FirstFragment()
+        val secondFragment = SecondFragment()
+        val thirdFragment = ThirdFragment()
 
         setCurrentFragment(firstFragment)
 
         calendarView = findViewById(R.id.calendarView)
 //        editText = findViewById(R.id.editText)
-        Log.i("MainActivity","Fetching by Current Date for Gifts!")
-        fetchDataFromDatabase()
+        Log.i("MainActivity", "Fetching by Current Date for Gifts!")
         // on below line we are adding set on
         // date change listener for calendar view.
         calendarView
@@ -64,11 +70,18 @@ class MainActivity : AppCompatActivity() {
                     // in which we are adding all the variables in it.
                     val Date = "${month + 1}/$dayOfMonth/$year"
                     dateString = Date
-                    Log.i("MainActivity","Fetching by Current Date for Gifts!")
+                    Log.i("MainActivity", "Fetching by Current Date for Gifts!")
+                    Log.i("MainActivity", "Value of date string $dateString")
                     fetchDataFromDatabase()
                     // set this date in TextView for Display
 //                    dateTV.setText(Date)
                 })
+
+        if (receivedIntent.hasExtra("date")) {
+            calendarView.post {
+                calendarView.setDate(parseDateString(dateString))
+            }
+        }
 
         val plusImageView: Button = findViewById(R.id.plusImageView)
         plusImageView.setOnClickListener {
@@ -87,10 +100,10 @@ class MainActivity : AppCompatActivity() {
 
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.home->setCurrentFragment(firstFragment)
-                R.id.person->setCurrentFragment(secondFragment)
-                R.id.settings->setCurrentFragment(thirdFragment)
+            when (it.itemId) {
+                R.id.home -> setCurrentFragment(firstFragment)
+                R.id.person -> setCurrentFragment(secondFragment)
+                R.id.settings -> setCurrentFragment(thirdFragment)
             }
             true
         }
@@ -100,11 +113,7 @@ class MainActivity : AppCompatActivity() {
 //    private fun showToast(message: String) {
 //        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 //    }
-    private fun setCurrentFragment(fragment: Fragment)=
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragment,fragment)
-            commit()
-        }
+
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("Range")
     private fun fetchDataFromDatabase() {
@@ -130,6 +139,7 @@ class MainActivity : AppCompatActivity() {
             GiftContract.GiftEntry.COLUMN_GIFT_LINK,
             GiftContract.GiftEntry.COLUMN_GIFT_ATTACHMENTS
         )
+        Log.i("MainActivity", "Value of date string $dateString")
 
         val selection = "${GiftContract.GiftEntry.COLUMN_GIFTEE_DATE} = ?"
         val selectionArgs = arrayOf(dateString)
@@ -146,6 +156,7 @@ class MainActivity : AppCompatActivity() {
 
 //        val inflater = LayoutInflater.from(this)
 
+        Log.i("MainActivity", "Value of date string $dateString")
         with(cursor) {
             while (moveToNext()) {
                 val gifteeName =
@@ -212,6 +223,19 @@ class MainActivity : AppCompatActivity() {
             }
             cursor.close()
         }
+    }
+
+    private fun setCurrentFragment(fragment: Fragment) =
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.flFragment, fragment)
+            commit()
+        }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun parseDateString(dateString: String): Long {
+        val format = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+        val date = format.parse(dateString)
+        return date?.time ?: 0L
     }
 }
 
