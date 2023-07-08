@@ -74,7 +74,6 @@ class FormActivity : AppCompatActivity() {
                         throw Exception()
                     }
 
-
                     // Create an Intent to go back to the MainActivity
                     val intent = Intent(this, MainActivity::class.java)
                     // Add the selected date as an extra to the result intent

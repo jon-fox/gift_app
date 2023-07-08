@@ -98,7 +98,6 @@ class MainActivity : AppCompatActivity() {
         //        val bottomNavigationView = (R.id.bottomNavigationView)
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
-
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> setCurrentFragment(firstFragment)
@@ -194,7 +193,7 @@ class MainActivity : AppCompatActivity() {
 
                 //margins between buttons
                 val margin = 10
-                layoutParams.setMargins(0, 0, margin, 0)
+                layoutParams.setMargins(0, 5, margin, 5)
 
                 gifteeButton.layoutParams = layoutParams
 
