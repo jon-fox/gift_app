@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Developer_Workspace/Gift_App/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.148" />
+        <entry key="..\:/Developer_Workspace/Gift_App/app/src/main/res/drawable/button_background.xml" value="0.1285" />
         <entry key="..\:/Developer_Workspace/Gift_App/app/src/main/res/drawable/circle_with_plus.xml" value="0.1955" />
         <entry key="..\:/Developer_Workspace/Gift_App/app/src/main/res/drawable/edittext_outline.xml" value="0.1015" />
         <entry key="..\:/Developer_Workspace/Gift_App/app/src/main/res/drawable/giftee_button.xml" value="0.237" />
@@ -16,6 +17,7 @@
         <entry key="..\:/Developer_Workspace/Gift_App/app/src/main/res/layout/fragment_second.xml" value="0.1" />
         <entry key="..\:/Developer_Workspace/Gift_App/app/src/main/res/layout/fragment_third.xml" value="0.1" />
         <entry key="..\:/Developer_Workspace/Gift_App/app/src/main/res/layout/gift_info_activity.xml" value="0.24895833333333334" />
+        <entry key="..\:/Developer_Workspace/Gift_App/app/src/main/res/layout/gift_view_background.xml" value="0.1" />
         <entry key="..\:/Developer_Workspace/Gift_App/app/src/main/res/layout/giftee_button.xml" value="0.25" />
         <entry key="..\:/Developer_Workspace/Gift_App/app/src/main/res/layout/login_screen.xml" value="0.23278985507246377" />
         <entry key="..\:/Developer_Workspace/Gift_App/app/src/main/res/layout/styles.xml" value="0.1" />

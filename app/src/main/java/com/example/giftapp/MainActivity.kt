@@ -209,6 +209,7 @@ class MainActivity : AppCompatActivity() {
                 gifteeButton.setOnClickListener {
                     // Handle button click event for gifteeButton
                     val intent = Intent(this@MainActivity, GiftInfoActivity::class.java)
+                    intent.putExtra("date", dateString)
                     intent.putExtra("gifteeName", gifteeName)
                     intent.putExtra("giftName", giftName)
                     intent.putExtra("giftOccasion", giftOccasion)
