@@ -3,10 +3,17 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
 
+/*
+add unique primary key to database to prevent updates to all
+https://stackoverflow.com/questions/23750812/pros-and-cons-of-using-md5-hash-as-the-primary-key-vs-use-a-int-identity-as-the
+int as primary key instead of hash, follow
+ */
+
 // Step 1: Define the contract class
 object GiftContract {
     object GiftEntry : BaseColumns {
         const val TABLE_NAME = "gifts"
+        const val COLUMN_ID = "id"
         const val COLUMN_GIFTEE_DATE = "gift_date"
         const val COLUMN_GIFTEE_NAME = "giftee_name"
         const val COLUMN_GIFT_NAME = "gift_name"
@@ -22,6 +29,7 @@ object GiftContract {
 private const val SQL_CREATE_ENTRIES =
     "CREATE TABLE ${GiftContract.GiftEntry.TABLE_NAME} (" +
 //            "${GiftContract.GiftEntry.COLUMN_GIFTEE_DATE} STRING PRIMARY KEY," +
+            "${GiftContract.GiftEntry.COLUMN_ID} INTEGER PRIMARY KEY," +
             "${GiftContract.GiftEntry.COLUMN_GIFTEE_DATE} STRING," +
             "${GiftContract.GiftEntry.COLUMN_GIFTEE_NAME} TEXT," +
             "${GiftContract.GiftEntry.COLUMN_GIFT_NAME} TEXT," +

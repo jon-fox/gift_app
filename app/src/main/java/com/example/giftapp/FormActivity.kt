@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import java.util.*
 
 class FormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,12 +42,15 @@ class FormActivity : AppCompatActivity() {
                     // Gets the data repository in write mode
                     val dbHelper = GiftDbHelper(this)
 
+                    val uniqueRowID: Int = UUID.randomUUID().hashCode()
+
                     val db = dbHelper.writableDatabase
                     val dateValue = intent.getStringExtra("date")
 
                     Log.i("FormActivity", "Value of date string ${dateValue}")
 
                     val values = ContentValues().apply {
+                        put(GiftContract.GiftEntry.COLUMN_ID, uniqueRowID)
                         put(GiftContract.GiftEntry.COLUMN_GIFTEE_DATE, dateValue)
                         put(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME, inputGifteeName)
                         put(GiftContract.GiftEntry.COLUMN_GIFT_NAME, inputGiftName)
@@ -78,6 +82,7 @@ class FormActivity : AppCompatActivity() {
                     val intent = Intent(this, MainActivity::class.java)
                     // Add the selected date as an extra to the result intent
                     intent.putExtra("date", dateValue)
+                    intent.putExtra("id", uniqueRowID)
                     startActivity(intent)
 
                     finish() // Call finish() to close the FormActivity and go back

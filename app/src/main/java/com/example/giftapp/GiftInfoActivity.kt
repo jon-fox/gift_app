@@ -16,6 +16,7 @@ class GiftInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gift_view_background)
 
+        val uniqueID = intent.getStringExtra("id") ?: ""
         val dateValue = intent.getStringExtra("date") ?: ""
         val gifteeName = intent.getStringExtra("gifteeName", ) ?: ""
         val giftName = intent.getStringExtra("giftName") ?: ""
@@ -64,9 +65,11 @@ class GiftInfoActivity : AppCompatActivity() {
             val dbHelper = GiftDbHelper(this)
 
             val db = dbHelper.writableDatabase
+            val uniqueID = intent.getStringExtra("id")
             val dateValue = intent.getStringExtra("date")
 
             val values = ContentValues().apply {
+                put(GiftContract.GiftEntry.COLUMN_ID, uniqueID)
                 put(GiftContract.GiftEntry.COLUMN_GIFTEE_DATE, updatedDateValue)
                 put(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME, updatedGifteeName)
                 put(GiftContract.GiftEntry.COLUMN_GIFT_NAME, updatedGiftName)
@@ -79,7 +82,7 @@ class GiftInfoActivity : AppCompatActivity() {
             val updateRowId = db?.update(
                 GiftContract.GiftEntry.TABLE_NAME,
                 values,
-                "${GiftContract.GiftEntry.COLUMN_GIFTEE_DATE} = ?",
+                "${GiftContract.GiftEntry.COLUMN_ID} = ?",
                 arrayOf(dateValue)
             )
 
@@ -138,6 +141,7 @@ class GiftInfoActivity : AppCompatActivity() {
             // Create an Intent to go back to the MainActivity
             val intent = Intent(this, MainActivity::class.java)
             // Add the selected date as an extra to the result intent
+            intent.putExtra("id", uniqueID)
             intent.putExtra("date", dateValue)
             startActivity(intent)
 

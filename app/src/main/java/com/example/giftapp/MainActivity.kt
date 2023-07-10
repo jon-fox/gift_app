@@ -12,7 +12,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.widget.*
 import android.widget.CalendarView.OnDateChangeListener
 import androidx.annotation.RequiresApi
@@ -40,10 +39,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val receivedIntent = intent
-        if (receivedIntent.hasExtra("date")) {
+        if (receivedIntent.hasExtra("id")) {
             Log.i("MainActivity", "Received info from form activity")
             dateString = receivedIntent.getStringExtra("date") ?: dateString
-            fetchDataFromDatabase()
+            fetchDataFromDatabase(receivedIntent.getStringExtra("id"))
         }
 
         // initializing variables of
@@ -115,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("Range")
-    private fun fetchDataFromDatabase() {
+    private fun fetchDataFromDatabase(uniqueID: String? = null) {
         Log.i("MainActivity", "Fetching from database")
         val linearLayout = findViewById<LinearLayout>(R.id.wish_list)
         linearLayout.removeAllViews() // Clear the existing views
@@ -176,7 +175,7 @@ class MainActivity : AppCompatActivity() {
                 val gifteeButton = Button(this@MainActivity)
 //                val gifteeButton = inflater.inflate(R.layout.giftee_button, linearLayout, false) as Button
                 gifteeButton.text = "Giftee: $gifteeName"
-
+                gifteeButton.tag = uniqueID
                 gifteeButton.setBackgroundResource(R.drawable.giftee_button)
 
                 val layoutParams = LinearLayout.LayoutParams(
@@ -209,6 +208,7 @@ class MainActivity : AppCompatActivity() {
                 gifteeButton.setOnClickListener {
                     // Handle button click event for gifteeButton
                     val intent = Intent(this@MainActivity, GiftInfoActivity::class.java)
+                    intent.putExtra("id", uniqueID)
                     intent.putExtra("date", dateString)
                     intent.putExtra("gifteeName", gifteeName)
                     intent.putExtra("giftName", giftName)
