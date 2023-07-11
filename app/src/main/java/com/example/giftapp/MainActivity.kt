@@ -41,8 +41,9 @@ class MainActivity : AppCompatActivity() {
         val receivedIntent = intent
         if (receivedIntent.hasExtra("id")) {
             Log.i("MainActivity", "Received info from form activity")
+            Log.i("MainActivity", "Received uniqueID ${receivedIntent.getStringExtra("id")}")
             dateString = receivedIntent.getStringExtra("date") ?: dateString
-            fetchDataFromDatabase(receivedIntent.getStringExtra("id"))
+            fetchDataFromDatabase(receivedIntent.getIntExtra("id", -1))
         }
 
         // initializing variables of
@@ -114,7 +115,7 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("Range")
-    private fun fetchDataFromDatabase(uniqueID: String? = null) {
+    private fun fetchDataFromDatabase(uniqueID: Int? = null) {
         Log.i("MainActivity", "Fetching from database")
         val linearLayout = findViewById<LinearLayout>(R.id.wish_list)
         linearLayout.removeAllViews() // Clear the existing views
@@ -138,6 +139,7 @@ class MainActivity : AppCompatActivity() {
             GiftContract.GiftEntry.COLUMN_GIFT_ATTACHMENTS
         )
         Log.i("MainActivity", "Value of date string $dateString")
+        Log.i("MainActivity", "Value of uniqueID $uniqueID")
 
         val selection = "${GiftContract.GiftEntry.COLUMN_GIFTEE_DATE} = ?"
         val selectionArgs = arrayOf(dateString)

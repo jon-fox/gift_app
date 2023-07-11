@@ -44,6 +44,8 @@ class FormActivity : AppCompatActivity() {
 
                     val uniqueRowID: Int = UUID.randomUUID().hashCode()
 
+                    Log.i("MainActivity", "Received uniqueID $uniqueRowID")
+
                     val db = dbHelper.writableDatabase
                     val dateValue = intent.getStringExtra("date")
 

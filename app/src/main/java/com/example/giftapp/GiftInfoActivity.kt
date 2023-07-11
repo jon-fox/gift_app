@@ -65,7 +65,7 @@ class GiftInfoActivity : AppCompatActivity() {
             val dbHelper = GiftDbHelper(this)
 
             val db = dbHelper.writableDatabase
-            val uniqueID = intent.getStringExtra("id")
+            val uniqueID = intent.getIntExtra("id", -1)
             val dateValue = intent.getStringExtra("date")
 
             val values = ContentValues().apply {
@@ -83,7 +83,7 @@ class GiftInfoActivity : AppCompatActivity() {
                 GiftContract.GiftEntry.TABLE_NAME,
                 values,
                 "${GiftContract.GiftEntry.COLUMN_ID} = ?",
-                arrayOf(dateValue)
+                arrayOf(uniqueID.toString())
             )
 
             val mutableMap = mutableMapOf<String, String>()
