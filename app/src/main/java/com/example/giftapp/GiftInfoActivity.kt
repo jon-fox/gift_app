@@ -17,6 +17,7 @@ class GiftInfoActivity : AppCompatActivity() {
         setContentView(R.layout.gift_view_background)
 
         val uniqueID = intent.getStringExtra("id") ?: ""
+        Log.i("GiftInfoActivity", "UniqueID coming into giftinfoactivity: $uniqueID")
         val dateValue = intent.getStringExtra("date") ?: ""
         val gifteeName = intent.getStringExtra("gifteeName", ) ?: ""
         val giftName = intent.getStringExtra("giftName") ?: ""
@@ -32,6 +33,13 @@ class GiftInfoActivity : AppCompatActivity() {
         val giftNotesView = findViewById<TextView>(R.id.giftNotesView)
         val giftLinkView = findViewById<TextView>(R.id.giftLinkView)
         val giftAttachmentsView = findViewById<TextView>(R.id.giftAttachmentsView)
+
+        Log.i("GiftInfoActivity", "GiftInfoActivity Giftee Name: $gifteeName")
+        Log.i("GiftInfoActivity", "GiftInfoActivity Gift Name: $giftName")
+        Log.i("GiftInfoActivity", "GiftInfoActivity Giftee Occasion: $giftOccasion")
+        Log.i("GiftInfoActivity", "GiftInfoActivity Gift Notes: $giftNotes")
+        Log.i("GiftInfoActivity", "GiftInfoActivity Gift Link: $giftLink")
+        Log.i("GiftInfoActivity", "GiftInfoActivity Gift Attachments: $giftAttachments")
 
         dateView.text = dateValue
         gifteeNameView.text = gifteeName
@@ -65,7 +73,10 @@ class GiftInfoActivity : AppCompatActivity() {
             val dbHelper = GiftDbHelper(this)
 
             val db = dbHelper.writableDatabase
-            val uniqueID = intent.getIntExtra("id", -1)
+            val uniqueID = intent.getStringExtra("id")
+
+            Log.i("GiftInfoActivity", "Received uniqueID from main activity $uniqueID")
+
             val dateValue = intent.getStringExtra("date")
 
             val values = ContentValues().apply {
@@ -78,6 +89,7 @@ class GiftInfoActivity : AppCompatActivity() {
                 put(GiftContract.GiftEntry.COLUMN_GIFT_LINK, updatedGiftLink)
                 put(GiftContract.GiftEntry.COLUMN_GIFT_ATTACHMENTS, updatedGiftAttachments)
             }
+            Log.i("GiftInfoActivity", "UniqueID being put into database for udpate: $uniqueID")
 
             val updateRowId = db?.update(
                 GiftContract.GiftEntry.TABLE_NAME,
@@ -86,48 +98,14 @@ class GiftInfoActivity : AppCompatActivity() {
                 arrayOf(uniqueID.toString())
             )
 
-            val mutableMap = mutableMapOf<String, String>()
-            if (updatedDateValue != dateView.toString()) {
-                // Date value has changed
-                mutableMap["dateView"] = updatedDateValue
-            }
-
-            if (updatedGifteeName != gifteeNameView.toString()) {
-                // Giftee name has changed
-                mutableMap["gifteeNameView"] = updatedGifteeName
-            }
-
-            if (updatedGiftName != giftNameView.toString()) {
-                // Gift name has changed
-                mutableMap["giftNameView"] = updatedGiftName
-            }
-
-            if (updatedGiftOccasion != giftOccasionView.toString()) {
-                // Gift occasion has changed
-                mutableMap["giftOccasionView"] = updatedGiftOccasion
-            }
-
-            if (updatedGiftNotes != giftNotesView.toString()) {
-                // Gift notes have changed
-                mutableMap["giftNotesView"] = updatedGiftNotes
-            }
-
-            if (updatedGiftLink != giftLinkView.toString()) {
-                // Gift link has changed
-                mutableMap["giftLinkView"] = updatedGiftLink
-            }
-
-            if (updatedGiftAttachments != giftAttachmentsView.toString()) {
-                // Gift attachments have changed
-                mutableMap["giftAttachmentsView"] = updatedGiftAttachments
-            }
-
-            Log.i("FormActivity", "FormActivity Giftee Name: $gifteeNameView")
-            Log.i("FormActivity", "FormActivity Gift Name: $giftNameView")
-            Log.i("FormActivity", "FormActivity Giftee Occasion: $giftOccasionView")
-            Log.i("FormActivity", "FormActivity Gift Notes: $giftNotesView")
-            Log.i("FormActivity", "FormActivity Gift Link: $giftLinkView")
-            Log.i("FormActivity", "FormActivity Gift Attachments: $giftAttachmentsView")
+            Log.i("GiftInfoActivity", "GiftInfoActivity uniqueID for updated: $uniqueID")
+            Log.i("GiftInfoActivity", "GiftInfoActivity updated date: $updatedDateValue")
+            Log.i("GiftInfoActivity", "GiftInfoActivity updated Giftee Name: $updatedGifteeName")
+            Log.i("GiftInfoActivity", "GiftInfoActivity updated Gift Name: $updatedGiftName")
+            Log.i("GiftInfoActivity", "GiftInfoActivity updated Giftee Occasion: $updatedGiftOccasion")
+            Log.i("GiftInfoActivity", "GiftInfoActivity updated Gift Notes: $updatedGiftNotes")
+            Log.i("GiftInfoActivity", "GiftInfoActivity updated Gift Link: $updatedGiftLink")
+            Log.i("GiftInfoActivity", "GiftInfoActivity updated Gift Attachments: $updatedGiftAttachments")
 
             // Handle the result of the insert operation if needed
             if (updateRowId != -1) {
@@ -140,12 +118,14 @@ class GiftInfoActivity : AppCompatActivity() {
 
             // Create an Intent to go back to the MainActivity
             val intent = Intent(this, MainActivity::class.java)
+
+            Log.i("GiftInfoActivity", "Returning uniqueID to main activity $uniqueID")
             // Add the selected date as an extra to the result intent
-            intent.putExtra("id", uniqueID)
+            intent.putExtra("id", uniqueID.toString())
             intent.putExtra("date", dateValue)
             startActivity(intent)
 
-            finish() // Call finish() to close the FormActivity and go back
+            finish() // Call finish() to close the GiftInfoActivity and go back
 
         } catch (e: Exception) {
             // Handle the exception

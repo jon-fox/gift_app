@@ -40,10 +40,9 @@ class MainActivity : AppCompatActivity() {
 
         val receivedIntent = intent
         if (receivedIntent.hasExtra("id")) {
-            Log.i("MainActivity", "Received info from form activity")
-            Log.i("MainActivity", "Received uniqueID ${receivedIntent.getStringExtra("id")}")
+            Log.i("MainActivity", "Received uniqueID from forms ${receivedIntent.getStringExtra("id")}")
             dateString = receivedIntent.getStringExtra("date") ?: dateString
-            fetchDataFromDatabase(receivedIntent.getIntExtra("id", -1))
+            fetchGifteeButtonsInLayout(receivedIntent.getStringExtra("id"))
         }
 
         // initializing variables of
@@ -72,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                     dateString = Date
                     Log.i("MainActivity", "Fetching by Current Date for Gifts!")
                     Log.i("MainActivity", "Value of date string $dateString")
-                    fetchDataFromDatabase()
+                    fetchGifteeButtonsInLayout()
                     // set this date in TextView for Display
 //                    dateTV.setText(Date)
                 })
@@ -109,28 +108,33 @@ class MainActivity : AppCompatActivity() {
 //        super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_main)
     }
+
+    private fun fetchGiftsByDate() {
+        TODO("Not yet implemented")
+    }
 //    private fun showToast(message: String) {
 //        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 //    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("Range")
-    private fun fetchDataFromDatabase(uniqueID: Int? = null) {
-        Log.i("MainActivity", "Fetching from database")
+    private fun updateDatabase(uniqueID: String? = null) {
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    @SuppressLint("Range")
+    private fun fetchGifteeButtonsInLayout(uniqueID: String? = null) {
+        Log.i("MainActivity", "UniqueID when entering the setGifteeButton method: $uniqueID")
+        Log.i("MainActivity", "setGifteeButton")
         val linearLayout = findViewById<LinearLayout>(R.id.wish_list)
         linearLayout.removeAllViews() // Clear the existing views
 
         val dbHelper = GiftDbHelper(this)
         val db = dbHelper.readableDatabase
 
-        if (dateString?.isEmpty() == true) {
-            Log.i("MainActivity", "Date string is empty")
-            // Handle the case when dateString is empty.
-            // You can display an error message or perform any required action here.
-            return
-        }
-
         val projection = arrayOf(
+            GiftContract.GiftEntry.COLUMN_ID,
             GiftContract.GiftEntry.COLUMN_GIFTEE_NAME,
             GiftContract.GiftEntry.COLUMN_GIFT_NAME,
             GiftContract.GiftEntry.COLUMN_GIFT_OCCASION,
@@ -159,6 +163,8 @@ class MainActivity : AppCompatActivity() {
         Log.i("MainActivity", "Value of date string $dateString")
         with(cursor) {
             while (moveToNext()) {
+                val uniqueID =
+                    cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_ID))
                 val gifteeName =
                     cursor.getString(cursor.getColumnIndexOrThrow(GiftContract.GiftEntry.COLUMN_GIFTEE_NAME))
                 val giftName =
@@ -178,6 +184,7 @@ class MainActivity : AppCompatActivity() {
 //                val gifteeButton = inflater.inflate(R.layout.giftee_button, linearLayout, false) as Button
                 gifteeButton.text = "Giftee: $gifteeName"
                 gifteeButton.tag = uniqueID
+                Log.i("MainActivity", "uniqueID from mainactivty button tag: ${gifteeButton.tag}")
                 gifteeButton.setBackgroundResource(R.drawable.giftee_button)
 
                 val layoutParams = LinearLayout.LayoutParams(
@@ -198,7 +205,7 @@ class MainActivity : AppCompatActivity() {
 
                 gifteeButton.layoutParams = layoutParams
 
-
+                Log.i("MainActivity", "UniqueID before being passed to giftinfoactivity: $uniqueID")
                 Log.i("MainActivity", "Giftee Name: $gifteeName")
                 Log.i("MainActivity", "Gift Name: $giftName")
                 Log.i("MainActivity", "Gift Occasion: $giftOccasion")
@@ -210,7 +217,9 @@ class MainActivity : AppCompatActivity() {
                 gifteeButton.setOnClickListener {
                     // Handle button click event for gifteeButton
                     val intent = Intent(this@MainActivity, GiftInfoActivity::class.java)
-                    intent.putExtra("id", uniqueID)
+                    Log.i("MainActivity", "UniqueID being passed to giftinfoactivity on button click: ${uniqueID.toString()}")
+                    var uniqueIdFromButton = gifteeButton.tag as String
+                    intent.putExtra("id", uniqueIdFromButton)
                     intent.putExtra("date", dateString)
                     intent.putExtra("gifteeName", gifteeName)
                     intent.putExtra("giftName", giftName)

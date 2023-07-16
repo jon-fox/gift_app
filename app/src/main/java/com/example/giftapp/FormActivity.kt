@@ -44,7 +44,7 @@ class FormActivity : AppCompatActivity() {
 
                     val uniqueRowID: Int = UUID.randomUUID().hashCode()
 
-                    Log.i("MainActivity", "Received uniqueID $uniqueRowID")
+                    Log.i("FormActivity", "Received uniqueID, this is in formactivity $uniqueRowID")
 
                     val db = dbHelper.writableDatabase
                     val dateValue = intent.getStringExtra("date")
@@ -82,9 +82,10 @@ class FormActivity : AppCompatActivity() {
 
                     // Create an Intent to go back to the MainActivity
                     val intent = Intent(this, MainActivity::class.java)
+                    Log.i("FormActivity", "Returning UniqueID to main $uniqueRowID")
                     // Add the selected date as an extra to the result intent
                     intent.putExtra("date", dateValue)
-                    intent.putExtra("id", uniqueRowID)
+                    intent.putExtra("id", uniqueRowID.toString())
                     startActivity(intent)
 
                     finish() // Call finish() to close the FormActivity and go back
